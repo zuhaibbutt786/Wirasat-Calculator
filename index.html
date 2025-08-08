@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2E8B57"/>
+    <meta name="description" content="Easy-to-use Islamic inheritance calculator with live gold/silver rates. Calculate inheritance distribution according to Islamic laws.">
+    <meta name="keywords" content="Islamic inheritance, inheritance calculator, Islamic law, gold silver rates, Pakistan inheritance">
+    <meta name="author" content="DeepVidia.com">
+    <meta property="og:title" content="Islamic Inheritance Calculator">
+    <meta property="og:description" content="Calculate inheritance shares according to Islamic laws with live gold/silver rates">
+    <meta property="og:type" content="website">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Islamic Inheritance Calculator - Calculate Islamic Inheritance Distribution</title>
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link active">🏠 Home</a>
+                <a href="about.html" class="nav-link">ℹ️ About</a>
+                <a href="contact.html" class="nav-link">📞 Contact</a>
+                <a href="privacy.html" class="nav-link">🔒 Privacy</a>
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">🇺🇸 English</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="hi">🇮🇳 हिन्दी</option>
+                        <option value="tr">🇹🇷 Türkçe</option>
+                        <option value="id">🇮🇩 Bahasa Indonesia</option>
+                    </select>
+                </div>
+            </nav>
+            <h1>📋 Islamic Inheritance Calculator</h1>
+            <p>Easy-to-use calculator for Islamic inheritance distribution</p>
+        </div>
+        
+        <div class="content">
+            <!-- Instructions Section -->
+            <div class="instructions">
+                <h3>📝 How to Use This Calculator</h3>
+                <div class="instruction-steps">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Enter the total value of the estate (property, money, etc.)</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Add family members who are alive and eligible for inheritance</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Click "Calculate Inheritance" to see the distribution</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="inheritance-form">
+                <!-- Estate Value Section -->
+                <div class="section">
+                    <h3>💰 Estate Value</h3>
+                    <div class="form-group">
+                        <label for="totalEstate">Total Estate Value (PKR)</label>
+                        <input type="number" id="totalEstate" class="form-control" required placeholder="Enter total estate value">
+                        <small class="help-text">Include all property, money, and assets</small>
+                    </div>
+                </div>
+
+                <!-- Gold and Silver Section -->
+                <div class="section">
+                    <h3>🥇 Gold & Silver Assets</h3>
+                    <div class="asset-grid">
+                        <div class="form-group">
+                            <label for="goldWeight">Gold Weight (in grams)</label>
+                            <input type="number" id="goldWeight" class="form-control" placeholder="Enter gold weight">
+                            <small class="help-text">Leave empty if no gold</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="silverWeight">Silver Weight (in grams)</label>
+                            <input type="number" id="silverWeight" class="form-control" placeholder="Enter silver weight">
+                            <small class="help-text">Leave empty if no silver</small>
+                        </div>
+                    </div>
+                    <div class="live-rates">
+                        <div class="rate-item">
+                            <span>💛 Gold Rate:</span>
+                            <span id="goldRate">Loading...</span>
+                        </div>
+                        <div class="rate-item">
+                            <span>🤍 Silver Rate:</span>
+                            <span id="silverRate">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Members Section -->
+                <div class="section">
+                    <h3>👨‍👩‍👧‍👦 Family Members</h3>
+                    
+                    <!-- Parents -->
+                    <div class="family-group">
+                        <h4>👴👵 Parents</h4>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="father">
+                            <label for="father">Father is alive</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="mother">
+                            <label for="mother">Mother is alive</label>
+                        </div>
+                    </div>
+
+                    <!-- Spouse -->
+                    <div class="family-group">
+                        <h4>💑 Spouse</h4>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="spouse">
+                            <label for="spouse">Spouse is alive</label>
+                        </div>
+                        <div class="form-group" id="spouseTypeGroup" style="display: none;">
+                            <label for="spouseType">Spouse Type</label>
+                            <select id="spouseType" class="form-control">
+                                <option value="">Select Spouse Type</option>
+                                <option value="husband">Husband</option>
+                                <option value="wife">Wife</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Children -->
+                    <div class="family-group">
+                        <h4>👶 Children</h4>
+                        <div class="form-group">
+                            <label for="sonsCount">Number of Sons</label>
+                            <input type="number" id="sonsCount" class="form-control" min="0" value="0" placeholder="Enter number of sons">
+                        </div>
+                        <div class="form-group">
+                            <label for="daughtersCount">Number of Daughters</label>
+                            <input type="number" id="daughtersCount" class="form-control" min="0" value="0" placeholder="Enter number of daughters">
+                        </div>
+                        
+                        <!-- Sons Details -->
+                        <div id="sonsDetails" class="children-details" style="display: none;">
+                            <h5>👦 Sons Details</h5>
+                            <div id="sonsList"></div>
+                        </div>
+                        
+                        <!-- Daughters Details -->
+                        <div id="daughtersDetails" class="children-details" style="display: none;">
+                            <h5>👧 Daughters Details</h5>
+                            <div id="daughtersList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Extended Family -->
+                    <div class="family-group">
+                        <h4>👨‍👩‍👧‍👦 Extended Family</h4>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="grandfather">
+                            <label for="grandfather">Grandfather is alive</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="grandmother">
+                            <label for="grandmother">Grandmother is alive</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="brothers">
+                            <label for="brothers">Brothers are alive</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="sisters">
+                            <label for="sisters">Sisters are alive</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculate Button -->
+                <button type="submit" class="btn">
+                    🧮 Calculate Inheritance Distribution
+                </button>
+            </form>
+            
+            <!-- Results Section -->
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li>Islamic Inheritance Calculator</li>
+                        <li>Live Gold & Silver Rates</li>
+                        <li>Multiple Languages</li>
+                        <li>Mobile Friendly</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>📧 info@deepvidia.com</p>
+                    <p>🌐 www.deepvidia.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Islamic Inheritance Calculator. Built with ❤️ by <a href="https://deepvidia.com" target="_blank">DeepVidia.com</a></p>
+            </div>
+        </footer>
+    </div>
+    <script src="js/app.js"></script>
+    <script src="js/language.js"></script>
+</body>
+</html>
